@@ -1,6 +1,6 @@
 # pretty_levelup
 
-A World of Warcraft 3.3.5 (WotLK) addon that shows a loot-style toast for every spell, ability, or passive you learn. It's built for servers that teach spells automatically on level up.
+A World of Warcraft **3.3.5a (Wrath of the Lich King)** addon that shows a loot-style toast for every spell, ability, or passive you learn. It's built for servers that teach spells automatically on level up.
 
 It uses the "You have learned a new spell/ability/passive effect" system messages, so it works whether the server sends spell links or plain text like `Frost Nova (Rank 1)`.
 
@@ -14,8 +14,8 @@ It uses the "You have learned a new spell/ability/passive effect" system message
 
 ## Install
 
-1. Download or clone this repo into `World of Warcraft/Interface/AddOns/`.
-2. Make sure the folder is named `pretty_levelup`.
+1. Download this repo (Code → Download ZIP) and extract it.
+2. Copy the inner `pretty_levelup` folder into `World of Warcraft/Interface/AddOns/`, so you end up with `Interface/AddOns/pretty_levelup/pretty_levelup.toc`.
 3. Restart the game.
 
 ## Usage
@@ -24,13 +24,13 @@ It uses the "You have learned a new spell/ability/passive effect" system message
 
 ## Configuration
 
-Edit `config.lua`:
+Edit `pretty_levelup/config.lua`:
 
 | Option | Default | Description |
 | --- | --- | --- |
 | `scale` | `1` | Toast size |
 | `sound` | `true` | Play a sound |
-| `sound_file` | `"levelup.mp3"` | Sound file in `assets/` (.mp3, .ogg, .wav) |
+| `sound_file` | `"levelup.mp3"` | Sound file in `pretty_levelup/assets/` (.mp3, .ogg, .wav) |
 | `numbuttons` | `4` | Toasts shown at once (max 8) |
 | `anims` | `true` | Glow and shine animations |
 | `point_x`, `point_y` | `0`, `120` | Toast position |
