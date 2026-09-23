@@ -1,5 +1,5 @@
 ---
--- /@ level up toast; based on pretty_lootalert by s0h2x, pretty_wow @/
+-- LearnedAlert: a toast for every spell you learn; based on pretty_lootalert by s0h2x
 
 local select = select;
 local unpack = unpack;
@@ -22,7 +22,7 @@ local point_y = config.point_y;
 local uptime = config.time;
 local spell_quality = config.spell_quality or 4;
 
-local LEVELUPALERT_NUM_BUTTONS = config.numbuttons;
+local LEARNEDALERT_NUM_BUTTONS = config.numbuttons;
 
 -- /* api's */
 local PlaySoundFile = PlaySoundFile;
@@ -34,7 +34,7 @@ local GetTime = GetTime;
 local GameTooltip = GameTooltip;
 
 -- /* assets */
-local assets = [[Interface\AddOns\pretty_levelup\assets\]];
+local assets = [[Interface\AddOns\LearnedAlert\assets\]];
 local SOUND_SPELL_LEARNED = assets..(config.sound_file or "levelup.mp3");
 local FALLBACK_ICON = [[Interface\Icons\INV_Misc_Book_09]];
 
@@ -57,11 +57,11 @@ for _, str in ipairs({ERR_LEARN_SPELL_S, ERR_LEARN_ABILITY_S, ERR_LEARN_PASSIVE_
 end
 
 -- /* tables */
-local LevelUpAlertFrameMixIn = {};
-LevelUpAlertFrameMixIn.alertQueue = {};
-LevelUpAlertFrameMixIn.alertButton = {};
+local LearnedAlertFrameMixIn = {};
+LearnedAlertFrameMixIn.alertQueue = {};
+LearnedAlertFrameMixIn.alertButton = {};
 
-function LevelUpAlertFrameMixIn:AddAlert(name, link, texture, spellName, spellRank)
+function LearnedAlertFrameMixIn:AddAlert(name, link, texture, spellName, spellRank)
 	tInsert(self.alertQueue, {
 		name 		= name,
 		link 		= link,
@@ -95,7 +95,7 @@ local function ResolveSpell(data)
 end
 
 -- learned is either a spell link or plain text like "Frost Nova (Rank 1)"
-function LevelUpAlertFrameMixIn:AddSpell(learned)
+function LearnedAlertFrameMixIn:AddSpell(learned)
 	local spellID = tonumber(learned:match("|Hspell:(%d+)"));
 	local text = learned:match("|h%[(.-)%]|h") or learned;
 	local name, rank = text:match("^(.-)%s*%((.+)%)$");
@@ -122,9 +122,9 @@ function LevelUpAlertFrameMixIn:AddSpell(learned)
 	self:AddAlert(name, link, icon or FALLBACK_ICON, spellName, rank);
 end
 
-function LevelUpAlertFrameMixIn:CreateAlert()
+function LearnedAlertFrameMixIn:CreateAlert()
 	if #self.alertQueue > 0 then
-		for i=1, LEVELUPALERT_NUM_BUTTONS do
+		for i=1, LEARNEDALERT_NUM_BUTTONS do
 			local button = self.alertButton[i];
 			if button and not button:IsShown() then
 				button.data = tRemove(self.alertQueue, 1);
@@ -135,9 +135,9 @@ function LevelUpAlertFrameMixIn:CreateAlert()
 	return nil;
 end
 
-function LevelUpAlertFrameMixIn:AdjustAnchors()
+function LearnedAlertFrameMixIn:AdjustAnchors()
 	local previousButton;
-	for i=1, LEVELUPALERT_NUM_BUTTONS do
+	for i=1, LEARNEDALERT_NUM_BUTTONS do
 		local button = self.alertButton[i];
 		if button then
 			button:ClearAllPoints();
@@ -159,17 +159,17 @@ function LevelUpAlertFrameMixIn:AdjustAnchors()
 	end
 end
 
-function LevelUpAlertFrame_OnLoad(self)
+function LearnedAlertFrame_OnLoad(self)
 	self.updateTime = uptime;
 
 	self:RegisterEvent("CHAT_MSG_SYSTEM");
 	self:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED");
 
-	mixin(self, LevelUpAlertFrameMixIn);
+	mixin(self, LearnedAlertFrameMixIn);
 end
 
-function LevelUpAlertFrame_OnEvent(self, event, ...)
+function LearnedAlertFrame_OnEvent(self, event, ...)
 	-- dual spec swaps and loading screens re-announce known spells, so ignore those for a moment
 	if event == "PLAYER_ENTERING_WORLD" or event == "ACTIVE_TALENT_GROUP_CHANGED" then
 		self.spellMuteUntil = GetTime() + 5;
@@ -181,34 +181,34 @@ function LevelUpAlertFrame_OnEvent(self, event, ...)
 		for _, pattern in ipairs(PATTERNS_LEARN_SPELL) do
 			local learned = message:match(pattern);
 			if learned then
-				LevelUpAlertFrameMixIn:AddSpell(learned);
+				LearnedAlertFrameMixIn:AddSpell(learned);
 				break;
 			end
 		end
 	end
 end
 
-function LevelUpAlertFrame_OnUpdate(self, elapsed)
+function LearnedAlertFrame_OnUpdate(self, elapsed)
 	self.updateTime = self.updateTime - elapsed;
 	if self.updateTime <= 0 then
-		local alert = LevelUpAlertFrameMixIn:CreateAlert();
+		local alert = LearnedAlertFrameMixIn:CreateAlert();
 		if alert then
 			alert:SetScale(scale);
 			alert:ClearAllPoints();
 			alert:Show();
 			alert.animIn:Play();
-			LevelUpAlertFrameMixIn:AdjustAnchors();
+			LearnedAlertFrameMixIn:AdjustAnchors();
 		end
 		self.updateTime = uptime;
 	end
 end
 
-function LevelUpAlertButtonTemplate_OnLoad(self)
+function LearnedAlertButtonTemplate_OnLoad(self)
 	self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-	tInsert(LevelUpAlertFrameMixIn.alertButton, self);
+	tInsert(LearnedAlertFrameMixIn.alertButton, self);
 end
 
-function LevelUpAlertButtonTemplate_OnShow(self)
+function LearnedAlertButtonTemplate_OnShow(self)
 	local data = self.data;
 	if not data or not data.name then
 		self:Hide();
@@ -230,8 +230,8 @@ function LevelUpAlertButtonTemplate_OnShow(self)
 	end
 
 	-- several spells arrive at once on level up, so only play the sound once per batch
-	if config.sound and GetTime() - (LevelUpAlertFrameMixIn.lastSound or 0) > 3 then
-		LevelUpAlertFrameMixIn.lastSound = GetTime();
+	if config.sound and GetTime() - (LearnedAlertFrameMixIn.lastSound or 0) > 3 then
+		LearnedAlertFrameMixIn.lastSound = GetTime();
 		PlaySoundFile(SOUND_SPELL_LEARNED);
 	end
 
@@ -251,7 +251,7 @@ local function GetButtonLink(self)
 	return self.hyperLink;
 end
 
-function LevelUpAlertButtonTemplate_OnHide(self)
+function LearnedAlertButtonTemplate_OnHide(self)
 	self.animIn:Stop();
 	self.waitAndAnimOut:Stop();
 
@@ -263,10 +263,10 @@ function LevelUpAlertButtonTemplate_OnHide(self)
 	if self.data then
 		tWipe(self.data);
 	end
-	LevelUpAlertFrameMixIn:AdjustAnchors();
+	LearnedAlertFrameMixIn:AdjustAnchors();
 end
 
-function LevelUpAlertButtonTemplate_OnClick(self, button)
+function LearnedAlertButtonTemplate_OnClick(self, button)
 	if button == "RightButton" then
 		self:Hide();
 	elseif GetButtonLink(self) then
@@ -274,21 +274,22 @@ function LevelUpAlertButtonTemplate_OnClick(self, button)
 	end
 end
 
-function LevelUpAlertButtonTemplate_OnEnter(self)
+function LearnedAlertButtonTemplate_OnEnter(self)
 	if not GetButtonLink(self) then return; end
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -14, -6);
 	GameTooltip:SetHyperlink(self.hyperLink);
 	GameTooltip:Show();
 end
 
--- /levelup test: fakes the chat message for a spell you know, so the toast can be checked anytime
-SLASH_PRETTYLEVELUP1 = "/levelup";
-SlashCmdList["PRETTYLEVELUP"] = function(msg)
+-- /learned test: fakes the chat message for a spell you know, so the toast can be checked anytime
+SLASH_LEARNEDALERT1 = "/learned";
+SLASH_LEARNEDALERT2 = "/levelup";  -- the old pretty_levelup command
+SlashCmdList["LEARNEDALERT"] = function(msg)
 	if msg == "test" then
 		local name, rank = GetSpellInfo(6603); -- Attack, every class has it
 		local sample = (rank and rank ~= "") and format("%s (%s)", name, rank) or name;
-		LevelUpAlertFrameMixIn:AddSpell(sample);
+		LearnedAlertFrameMixIn:AddSpell(sample);
 	else
-		print("pretty_levelup: /levelup test - show a sample toast");
+		print("LearnedAlert: /learned test - show a sample toast");
 	end
 end

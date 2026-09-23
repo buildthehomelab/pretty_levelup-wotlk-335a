@@ -4,7 +4,7 @@
 	<Script file="locale.lua"/>
 	<Script file="core.lua"/>
 
-	<Button name="LevelUpAlertButtonTemplate" parent="UIParent" toplevel="true" frameLevel="120" frameStrata="FULLSCREEN_DIALOG" hidden="true" virtual="true">
+	<Button name="LearnedAlertButtonTemplate" parent="UIParent" toplevel="true" frameLevel="120" frameStrata="FULLSCREEN_DIALOG" hidden="true" virtual="true">
 		<Size x="276" y="96"/>
 		<Animations>
 			<AnimationGroup parentKey="animIn">
@@ -28,7 +28,7 @@
 		</Animations>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture parentKey="Background" file="Interface\AddOns\pretty_levelup\assets\loottoast">
+				<Texture parentKey="Background" file="Interface\AddOns\LearnedAlert\assets\loottoast">
 					<Size x="276" y="96"/>
 					<Anchors>
 						<Anchor point="CENTER"/>
@@ -37,7 +37,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="BORDER">
-				<Texture name="$parentIcon" parentKey="Icon" file="Interface\AddOns\pretty_levelup\assets\unknow_treasure">
+				<Texture name="$parentIcon" parentKey="Icon" file="Interface\AddOns\LearnedAlert\assets\unknow_treasure">
 					<Size x="52" y="52"/>
 					<Anchors>
 						<Anchor point="LEFT" x="23" y="-2"/>
@@ -45,7 +45,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
-				<Texture parentKey="IconBorder" file="Interface\AddOns\pretty_levelup\assets\LootToastAtlas">
+				<Texture parentKey="IconBorder" file="Interface\AddOns\LearnedAlert\assets\LootToastAtlas">
 					<Size x="58" y="58"/>
 					<Anchors>
 						<Anchor point="CENTER" relativeTo="$parentIcon" relativePoint="CENTER" x="0" y="0"/>
@@ -66,7 +66,7 @@
 				</FontString>
 			</Layer>
 			<Layer level="OVERLAY">
-				<Texture file="Interface\AddOns\pretty_levelup\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="glow">
+				<Texture file="Interface\AddOns\LearnedAlert\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="glow">
 					<Size x="286" y="109"/>
 					<Anchors>
 						<Anchor point="CENTER" x="0" y="0"/>
@@ -88,7 +88,7 @@
 						</AnimationGroup>
 					</Animations>
 				</Texture>
-				<Texture file="Interface\AddOns\pretty_levelup\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="shine">
+				<Texture file="Interface\AddOns\LearnedAlert\assets\LootToastAtlas" alphaMode="ADD" hidden="true" parentKey="shine">
 					<Size x="171" y="75"/>
 					<Anchors>
 						<Anchor point="BOTTOMLEFT" x="-10" y="12"/>
@@ -114,33 +114,33 @@
 			</Layer>
 		</Layers>
 		<Scripts>
-			<OnLoad function="LevelUpAlertButtonTemplate_OnLoad"/>
-			<OnShow function="LevelUpAlertButtonTemplate_OnShow"/>
-			<OnHide function="LevelUpAlertButtonTemplate_OnHide"/>
-			<OnClick function="LevelUpAlertButtonTemplate_OnClick"/>
-			<OnEnter function="LevelUpAlertButtonTemplate_OnEnter"/>
+			<OnLoad function="LearnedAlertButtonTemplate_OnLoad"/>
+			<OnShow function="LearnedAlertButtonTemplate_OnShow"/>
+			<OnHide function="LearnedAlertButtonTemplate_OnHide"/>
+			<OnClick function="LearnedAlertButtonTemplate_OnClick"/>
+			<OnEnter function="LearnedAlertButtonTemplate_OnEnter"/>
 			<OnLeave function="GameTooltip_Hide"/>
 		</Scripts>
 	</Button>
 
-	<Frame name="LevelUpAlertFrame" parent="UIParent" hidden="false">
+	<Frame name="LearnedAlertFrame" parent="UIParent" hidden="false">
 		<Size x="10" y="10"/>
 		<Anchors>
 			<Anchor point="BOTTOM" x="0" y="128"/>
 		</Anchors>
 		<Scripts>
-			<OnLoad function="LevelUpAlertFrame_OnLoad"/>
-			<OnEvent function="LevelUpAlertFrame_OnEvent"/>
-			<OnUpdate function="LevelUpAlertFrame_OnUpdate"/>
+			<OnLoad function="LearnedAlertFrame_OnLoad"/>
+			<OnEvent function="LearnedAlertFrame_OnEvent"/>
+			<OnUpdate function="LearnedAlertFrame_OnUpdate"/>
 		</Scripts>
 	</Frame>
 
-	<Button name="LevelUpAlertButton1" inherits="LevelUpAlertButtonTemplate" id="1"/>
-	<Button name="LevelUpAlertButton2" inherits="LevelUpAlertButtonTemplate" id="2"/>
-	<Button name="LevelUpAlertButton3" inherits="LevelUpAlertButtonTemplate" id="3"/>
-	<Button name="LevelUpAlertButton4" inherits="LevelUpAlertButtonTemplate" id="4"/>
-	<Button name="LevelUpAlertButton5" inherits="LevelUpAlertButtonTemplate" id="5"/>
-	<Button name="LevelUpAlertButton6" inherits="LevelUpAlertButtonTemplate" id="6"/>
-	<Button name="LevelUpAlertButton7" inherits="LevelUpAlertButtonTemplate" id="7"/>
-	<Button name="LevelUpAlertButton8" inherits="LevelUpAlertButtonTemplate" id="8"/>
+	<Button name="LearnedAlertButton1" inherits="LearnedAlertButtonTemplate" id="1"/>
+	<Button name="LearnedAlertButton2" inherits="LearnedAlertButtonTemplate" id="2"/>
+	<Button name="LearnedAlertButton3" inherits="LearnedAlertButtonTemplate" id="3"/>
+	<Button name="LearnedAlertButton4" inherits="LearnedAlertButtonTemplate" id="4"/>
+	<Button name="LearnedAlertButton5" inherits="LearnedAlertButtonTemplate" id="5"/>
+	<Button name="LearnedAlertButton6" inherits="LearnedAlertButtonTemplate" id="6"/>
+	<Button name="LearnedAlertButton7" inherits="LearnedAlertButtonTemplate" id="7"/>
+	<Button name="LearnedAlertButton8" inherits="LearnedAlertButtonTemplate" id="8"/>
 </Ui>

@@ -1,5 +1,5 @@
 ---
--- /@ level up toast; based on pretty_lootalert by s0h2x, pretty_wow @/
+-- LearnedAlert: a toast for every spell you learn; based on pretty_lootalert by s0h2x
 
 local _, private = ...;
 local next, pairs = next, pairs;
