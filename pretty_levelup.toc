@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: pretty_levelup
+## Notes: |cffcaf7faShows a toast for spells learned on level up (based on pretty_lootalert)|r
+## Version: 2.0
+## Author: s0high
+
+pretty_levelup.xml
